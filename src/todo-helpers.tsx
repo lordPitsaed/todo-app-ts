@@ -1,7 +1,5 @@
 import { Todo } from './custom_types'
 
-let _minId = 100
-
 const toggleProp = (todos: Todo[], id: number, propName: keyof Todo) => {
     const oldItem = todos.filter((el) => el['id'] === id)[0]
     const idx = todos.indexOf(oldItem)
@@ -25,7 +23,7 @@ const getItemsFiltered = (filter: string, dataArr: Todo[]) => {
 const createTodoItem = (label: string, timer = 0) => {
     return {
         label,
-        id: ++_minId,
+        id: Math.floor(Math.random() * Math.random() * 10000),
         done: false,
         edit: false,
         timeCreated: new Date(),
