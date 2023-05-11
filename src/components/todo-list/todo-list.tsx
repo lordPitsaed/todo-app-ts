@@ -14,7 +14,11 @@ export default function TodoList({ todos }: { todos: Todo[] }) {
                     label={label}
                     done={done}
                     timer={timer}
-                    timeCreated={timeCreated}
+                    timeCreated={
+                        typeof timeCreated === 'string'
+                            ? Date.parse(timeCreated)
+                            : timeCreated
+                    }
                     onToggleDone={() => handlers.onToggleDone(id)}
                     onDeleteItem={() => handlers.deleteTodo(id)}
                     onChangeLabel={(newLabel: string) => {

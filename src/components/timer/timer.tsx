@@ -38,9 +38,9 @@ export default function Timer({
         timerId.current = undefined
     }
 
-    useEffect(() => {
-        startTimer()
-    }, [timer])
+    // useEffect(() => {
+    //     startTimer()
+    // }, [timer])
 
     useEffect(() => {
         return () => {

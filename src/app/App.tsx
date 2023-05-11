@@ -1,5 +1,6 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react'
 import { HandlersContext, TodosContext } from '../context'
+import { Todo } from '../custom_types'
 import Header from '../modules/header/header'
 import MainModule from '../modules/main/main'
 import {
@@ -12,11 +13,17 @@ import {
 import './App.css'
 
 export default function App() {
-    const defaultTodos = [
-        createTodoItem('created task', 100),
-        createTodoItem('created task', 150),
-        createTodoItem('created task', 240),
-    ]
+    const getLocalStorageTodos = (): Todo[] => {
+        const savedTodos = localStorage.getItem('todos')
+
+        if (typeof savedTodos === 'string') {
+            const localStorageTodos: Todo[] = JSON.parse(savedTodos)
+            return localStorageTodos
+        } else {
+            return [createTodoItem('', 0)]
+        }
+    }
+    const defaultTodos = getLocalStorageTodos()
     const [todos, setTodos] = useState(defaultTodos)
     const [, setTime] = useState(new Date())
     const tickId: MutableRefObject<
@@ -51,6 +58,10 @@ export default function App() {
             clearInterval(tickId.current)
         }
     }, [])
+
+    useEffect(() => {
+        localStorage.setItem('todos', JSON.stringify(todos))
+    }, [todos])
 
     const tick = () => {
         setTime(new Date())

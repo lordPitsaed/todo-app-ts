@@ -15,7 +15,7 @@ export default function TodoListItem({
     label: string
     done: boolean
     timer: number
-    timeCreated: Date
+    timeCreated: number | Date
     onToggleDone: PropEventHandler
     onDeleteItem: PropEventHandler
     onChangeLabel: (input: string) => void
