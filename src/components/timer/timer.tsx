@@ -4,23 +4,38 @@ import { formatTimer } from '../../todo-helpers'
 export default function Timer({
     timerCreated,
     done,
+    id,
 }: {
     timerCreated: number
     done: boolean
+    id: number
 }) {
-    const [timer, setTimer] = useState(timerCreated)
+    const getSavedTimer = () => {
+        const savedTimer = Number(localStorage.getItem(`timer${id}`))
+        if (typeof savedTimer === 'number') {
+            if (savedTimer <= 0) {
+                return 0
+            }
+            return savedTimer
+        }
+    }
+    const [timer, setTimer] = useState(getSavedTimer() || timerCreated)
     const startTime: MutableRefObject<number> = useRef(Date.now())
     const timerId: MutableRefObject<
         number | undefined | ReturnType<typeof setTimeout>
     > = useRef(undefined)
-
-    const tick = () => {
+    const getRemainingTime = () => {
         const timeDiff = Date.now() - startTime.current
-        let remaining = Math.round(timer - timeDiff / 1000)
+        const remaining = Math.round(timer - timeDiff / 1000)
+        return remaining
+    }
+    const tick = () => {
+        let remaining = getRemainingTime()
         if (remaining < 0) {
             remaining = 0
             pauseTimer()
         }
+        console.log(remaining)
         setTimer(remaining)
     }
 
@@ -38,9 +53,9 @@ export default function Timer({
         timerId.current = undefined
     }
 
-    // useEffect(() => {
-    //     startTimer()
-    // }, [timer])
+    useEffect(() => {
+        localStorage.setItem(`timer${id}`, String(timer))
+    }, [timer])
 
     useEffect(() => {
         return () => {

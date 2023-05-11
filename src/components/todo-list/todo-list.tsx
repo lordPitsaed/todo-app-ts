@@ -11,6 +11,7 @@ export default function TodoList({ todos }: { todos: Todo[] }) {
         return (
             <li key={id} className={`todo-item`}>
                 <TodoListItem
+                    id={id}
                     label={label}
                     done={done}
                     timer={timer}

@@ -4,6 +4,7 @@ import CreatedTimer from '../created-timer/created-timer'
 import Timer from '../timer/timer'
 
 export default function TodoListItem({
+    id,
     label,
     done,
     timeCreated,
@@ -12,6 +13,7 @@ export default function TodoListItem({
     onDeleteItem,
     onChangeLabel,
 }: {
+    id: number
     label: string
     done: boolean
     timer: number
@@ -56,7 +58,7 @@ export default function TodoListItem({
                 <span className={'title ' + (done && 'completed')}>
                     {label}
                 </span>
-                <Timer timerCreated={timer} done={done}></Timer>
+                <Timer id={id} timerCreated={timer} done={done}></Timer>
                 <CreatedTimer time={timeCreated}></CreatedTimer>
             </label>
             <button
