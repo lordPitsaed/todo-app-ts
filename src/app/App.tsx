@@ -3,13 +3,7 @@ import { HandlersContext, TodosContext } from '../context';
 import { Todo } from '../custom_types';
 import Header from '../modules/header/header';
 import MainModule from '../modules/main/main';
-import {
-  createTodoItem,
-  deleteTodoItem,
-  newTodo,
-  setField,
-  toggleProp,
-} from '../todo-helpers';
+import { deleteTodoItem, newTodo, setField, toggleProp } from '../todo-helpers';
 import './App.css';
 
 export default function App() {
@@ -20,7 +14,7 @@ export default function App() {
       const localStorageTodos: Todo[] = JSON.parse(savedTodos);
       return localStorageTodos;
     } else {
-      return [createTodoItem('', 0)];
+      return [];
     }
   };
   const defaultTodos = getLocalStorageTodos();
